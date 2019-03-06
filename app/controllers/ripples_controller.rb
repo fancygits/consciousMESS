@@ -72,3 +72,4 @@ class RipplesController < ApplicationController
       params.require(:ripple).permit(:name, :url, :message)
     end
 end
+

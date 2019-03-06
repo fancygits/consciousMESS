@@ -12,7 +12,11 @@
   <tbody>
     <% @ripples.each do |ripple| %>
       <tr>
-        <td><%= link_to ripple.name, "http://#{ripple.url}", :target => "_blank" %></td>
+        <td>
+          <%= link_to_if(ripple.url, ripple.name, 
+                        ripple.url, 
+                        :target => "_blank") %>
+        </td>
         <td><%= ripple.message %></td>
         <td><%= ripple.created_at %></td>
         <td><%= link_to 'Show', ripple %></td>
