@@ -11,7 +11,7 @@ Ripple.create!(name: 'Dr. Claw',
                 message: 'NEXT TIME GADGET!')
 
 Ripple.create!(name: 'Anon E. Mouse',
-                url: 'www.4chan.com',
+                url: '',
                 message: %{Can't touch this (duh duh duh duh, duh duh, duh duh)})
 
 CSV.foreach(Rails.root.join('lib/seeds.csv'), headers: true) do |row|

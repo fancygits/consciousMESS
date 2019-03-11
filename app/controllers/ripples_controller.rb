@@ -4,7 +4,7 @@ class RipplesController < ApplicationController
   # GET /ripples
   # GET /ripples.json
   def index
-    @ripples = Ripple.all
+    @ripples = Ripple.limit(100).order(:created_at)
   end
 
   # GET /ripples/1

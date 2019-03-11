@@ -13,7 +13,7 @@
     <% @ripples.each do |ripple| %>
       <tr>
         <td>
-          <%= link_to_if(ripple.url, ripple.name, 
+          <%= link_to_if(ripple.url.present?, ripple.name, 
                         ripple.url, 
                         :target => "_blank") %>
         </td>

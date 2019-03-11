@@ -1,7 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong><%= @ripple.name %> said:</strong>
+  <strong><%= link_to_if(@ripple.url.present?, @ripple.name, 
+                        @ripple.url, 
+                        :target => "_blank") %>
+              said:</strong>
 </p>
 
 <p>
