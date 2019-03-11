@@ -31,6 +31,7 @@ class RipplesController < ApplicationController
         format.html { redirect_to @ripple, notice: 'Ripple was successfully created.' }
         format.json { render :show, status: :created, location: @ripple }
       else
+        puts @ripple.errors.full_messages
         format.html { render :new }
         format.json { render json: @ripple.errors, status: :unprocessable_entity }
       end
@@ -39,27 +40,34 @@ class RipplesController < ApplicationController
 
   # PATCH/PUT /ripples/1
   # PATCH/PUT /ripples/1.json
-  def update
-    respond_to do |format|
-      if @ripple.update(ripple_params)
-        format.html { redirect_to @ripple, notice: 'Ripple was successfully updated.' }
-        format.json { render :show, status: :ok, location: @ripple }
-      else
-        format.html { render :edit }
-        format.json { render json: @ripple.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #def update
+  #  respond_to do |format|
+  #    if @ripple.update(ripple_params)
+  #      format.html { redirect_to @ripple, notice: 'Ripple was successfully updated.' }
+  #      format.json { render :show, status: :ok, location: @ripple }
+  #    else
+  #      format.html { render :edit }
+  #      format.json { render json: @ripple.errors, status: :unprocessable_entity }
+  #    end
+  #  end
+  #end
 
   # DELETE /ripples/1
   # DELETE /ripples/1.json
-  def destroy
-    @ripple.destroy
-    respond_to do |format|
-      format.html { redirect_to ripples_url, notice: 'Ripple was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+  #def destroy
+  #  @ripple.destroy
+  #  respond_to do |format|
+  #    format.html { redirect_to ripples_url, notice: 'Ripple was successfully destroyed.' }
+  #    format.json { head :no_content }
+  #  end
+  #end
+  
+  # GET /ripples/10
+  # GET /ripples/10.json
+  #def get_first_10
+  #  @ripples = Ripple.first(10)
+  #end
+    
 
   private
     # Use callbacks to share common setup or constraints between actions.

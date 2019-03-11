@@ -9,3 +9,17 @@ two:
   name: MyString
   url: MyString
   message: MyText
+  
+good_url:
+  name: Mr. Correct Url
+  url: http://www.example.com
+  message: I can follow directions and create a ripple correctly.
+  
+bad_url:
+  name: Mr. Incorrect Url
+  url: incorrectURL
+  message: I can't format a URL correctly.
+  
+no_url:
+  name: Mr. Absent Url
+  message: I don't have a URL.

@@ -1,5 +1,7 @@
 class Ripple < ApplicationRecord
-  before_save :sanitize_url
+  validates :name, :message, presence: true
+  validates_format_of :url, allow_blank: true, :with => /\A(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?\Z/i
+  after_validation :sanitize_url
 
   
   def sanitize_url

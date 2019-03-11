@@ -17,7 +17,7 @@
                         ripple.url, 
                         :target => "_blank") %>
         </td>
-        <td><%= ripple.message %></td>
+        <td><%=h truncate(ripple.message, :length => 75) %></td>
         <td><%= ripple.created_at %></td>
         <td><%= link_to 'Show', ripple %></td>
       </tr>
