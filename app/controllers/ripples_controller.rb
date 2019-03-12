@@ -1,10 +1,11 @@
 class RipplesController < ApplicationController
   before_action :set_ripple, only: [:show, :edit, :update, :destroy]
+  before_action :set_page, only: [:index]
 
   # GET /ripples
   # GET /ripples.json
   def index
-    @ripples = Ripple.limit(100).order(:created_at)
+    @ripples = Ripple.order(:created_at).limit(10).offset(@page_num * 10)
   end
 
   # GET /ripples/1
@@ -40,34 +41,27 @@ class RipplesController < ApplicationController
 
   # PATCH/PUT /ripples/1
   # PATCH/PUT /ripples/1.json
-  #def update
-  #  respond_to do |format|
-  #    if @ripple.update(ripple_params)
-  #      format.html { redirect_to @ripple, notice: 'Ripple was successfully updated.' }
-  #      format.json { render :show, status: :ok, location: @ripple }
-  #    else
-  #      format.html { render :edit }
-  #      format.json { render json: @ripple.errors, status: :unprocessable_entity }
-  #    end
-  #  end
-  #end
+  def update
+   respond_to do |format|
+     if @ripple.update(ripple_params)
+       format.html { redirect_to @ripple, notice: 'Ripple was successfully updated.' }
+       format.json { render :show, status: :ok, location: @ripple }
+     else
+       format.html { render :edit }
+       format.json { render json: @ripple.errors, status: :unprocessable_entity }
+     end
+   end
+  end
 
   # DELETE /ripples/1
   # DELETE /ripples/1.json
-  #def destroy
-  #  @ripple.destroy
-  #  respond_to do |format|
-  #    format.html { redirect_to ripples_url, notice: 'Ripple was successfully destroyed.' }
-  #    format.json { head :no_content }
-  #  end
-  #end
-  
-  # GET /ripples/10
-  # GET /ripples/10.json
-  #def get_first_10
-  #  @ripples = Ripple.first(10)
-  #end
-    
+  def destroy
+   @ripple.destroy
+   respond_to do |format|
+     format.html { redirect_to ripples_url, notice: 'Ripple was successfully destroyed.' }
+     format.json { head :no_content }
+   end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -78,6 +72,14 @@ class RipplesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def ripple_params
       params.require(:ripple).permit(:name, :url, :message)
+    end
+
+    def set_page
+      if params[:page].present?
+        @page_num = params[:page].to_i
+      else
+        @page_num = 0
+      end
     end
 end
 

@@ -27,4 +27,12 @@
 
 <br>
 
-<%= link_to 'New Ripple', new_ripple_path %>
+<p> You are on page <%= @page_num %>.</p>
+
+<nav>
+  <%= link_to 'Newest', ripples_path %> | 
+  <%= link_to 'Previous 10 Ripples', ripples_path(page: @page_num - 1) %> | 
+  <%= link_to 'Next 10 Ripples', ripples_path(page: @page_num + 1) %> | 
+  <%= link_to 'Oldest', ripples_path(page: 10) %>
+  <%= link_to 'New Ripple', new_ripple_path %>
+</nav>
