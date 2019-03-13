@@ -32,7 +32,6 @@ class RipplesController < ApplicationController
 
     respond_to do |format|
       if @ripple.save
-        session.delete(:total_pages)
         session[:page] = 1
         format.html { redirect_to root_path, notice: 'Ripple was successfully created.' }
         format.json { render :show, status: :created, location: @ripple }
@@ -49,7 +48,6 @@ class RipplesController < ApplicationController
   def update
    respond_to do |format|
      if @ripple.update(ripple_params)
-       session.delete(:total_pages)
        format.html { redirect_to @ripple, notice: 'Ripple was successfully updated.' }
        format.json { render :show, status: :ok, location: @ripple }
      else
@@ -93,7 +91,7 @@ class RipplesController < ApplicationController
     end
 
     def get_total_pages
-      session[:total_pages] ||= (Ripple.all.count / 10.0).ceil
+      session[:total_pages] = (Ripple.all.count / 10.0).ceil
     end
 end
 
