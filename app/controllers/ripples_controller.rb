@@ -1,11 +1,14 @@
 class RipplesController < ApplicationController
   before_action :set_ripple, only: [:show, :edit, :update, :destroy]
   before_action :set_page, only: [:index]
+  before_action :get_total_pages
 
   # GET /ripples
   # GET /ripples.json
   def index
-    @ripples = Ripple.order(:created_at).limit(10).offset(@page_num * 10)
+    @page = session[:page].to_i
+    @total_pages = session[:total_pages].to_i
+    @ripples = Ripple.order(created_at: :desc).limit(10).offset((@page - 1) * 10)
   end
 
   # GET /ripples/1
@@ -29,7 +32,9 @@ class RipplesController < ApplicationController
 
     respond_to do |format|
       if @ripple.save
-        format.html { redirect_to @ripple, notice: 'Ripple was successfully created.' }
+        session.delete(:total_pages)
+        session[:page] = 1
+        format.html { redirect_to root_path, notice: 'Ripple was successfully created.' }
         format.json { render :show, status: :created, location: @ripple }
       else
         puts @ripple.errors.full_messages
@@ -44,6 +49,7 @@ class RipplesController < ApplicationController
   def update
    respond_to do |format|
      if @ripple.update(ripple_params)
+       session.delete(:total_pages)
        format.html { redirect_to @ripple, notice: 'Ripple was successfully updated.' }
        format.json { render :show, status: :ok, location: @ripple }
      else
@@ -57,10 +63,18 @@ class RipplesController < ApplicationController
   # DELETE /ripples/1.json
   def destroy
    @ripple.destroy
+   session.delete(:total_pages)
    respond_to do |format|
-     format.html { redirect_to ripples_url, notice: 'Ripple was successfully destroyed.' }
+     format.html { redirect_to root_path, notice: 'Ripple was successfully destroyed.' }
      format.json { head :no_content }
    end
+  end
+
+  # Sets the page number and redirects to root to display that page's records
+  def page
+    page = params[:page].to_i.clamp(1, session[:total_pages].to_i)
+    session[:page] = page
+    redirect_to root_path
   end
 
   private
@@ -75,11 +89,11 @@ class RipplesController < ApplicationController
     end
 
     def set_page
-      if params[:page].present?
-        @page_num = params[:page].to_i
-      else
-        @page_num = 0
-      end
+      session[:page] ||= 1
+    end
+
+    def get_total_pages
+      session[:total_pages] ||= (Ripple.all.count / 10.0).ceil
     end
 end
 

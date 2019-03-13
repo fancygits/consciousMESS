@@ -6,10 +6,7 @@
                         :target => "_blank") %>
               said:</strong>
 </p>
-
-<p>
-  <blockquote><%= @ripple.message %></blockquote>
-  
-</p>
-
-<%= link_to 'Back', ripples_path %>
+<div>
+  <%= simple_format(@ripple.message, {}, wrapper_tag: "blockquote") %>
+</div>
+<%= link_to 'Back', root_path %>

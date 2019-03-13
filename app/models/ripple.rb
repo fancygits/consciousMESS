@@ -3,7 +3,7 @@ class Ripple < ApplicationRecord
   validates_format_of :url, allow_blank: true, :with => /\A(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?\Z/i
   after_validation :sanitize_url
 
-  
+  # adds http:// to any url missing it.
   def sanitize_url
     return if url.blank?
     url = URI.parse(self.url) rescue false
