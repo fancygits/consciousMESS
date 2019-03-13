@@ -29,7 +29,6 @@ class RipplesController < ApplicationController
   # POST /ripples.json
   def create
     @ripple = Ripple.new(ripple_params)
-
     respond_to do |format|
       if @ripple.save
         session[:page] = 1
