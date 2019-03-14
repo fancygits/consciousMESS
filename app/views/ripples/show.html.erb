@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong><%= link_to_if(@ripple.url.present?, @ripple.name, 
-                        @ripple.url, 
-                        :target => "_blank") %>
-              said:</strong>
-</p>
-<div>
+<div class="ripple">
+  <h2>
+  <%= link_to_if(@ripple.url.present?, 
+  	             @ripple.name, 
+                 @ripple.url, 
+	               :target => "_blank") %>
+	 said:
+	</h2>
   <%= simple_format(@ripple.message, {}, wrapper_tag: "blockquote") %>
 </div>
 <%= link_to 'Back', root_path %>

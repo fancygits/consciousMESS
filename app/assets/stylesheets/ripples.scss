@@ -22,9 +22,36 @@
     font-family: monospace;
   }
   blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid dodgerblue;
     font-size: 2em;
     font-family: serif; 
-    padding: 0.5em 0;
+    margin: 1.5em 30px;
+    padding: 0.5em 10px;
     line-height: 1em;
+    quotes: "\201C""\201D""\2018""\2019";
+    p {
+      display: inline;
+    }
+  }
+  blockquote:before {
+    color: dodgerblue;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.3em;
+  }
+  .ripple {
+    background-position: center;
+    transition: background 0.5s;
+    &:hover {
+      background: white radial-gradient(circle, transparent 1%, white 1%) center/15000%;
+    }
+    &:active {
+      background-color: dodgerblue;
+      background-size: 100%;
+      transition: backgrond 0s;
+    }
   }
 }
