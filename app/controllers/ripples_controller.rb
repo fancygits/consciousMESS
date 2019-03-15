@@ -1,5 +1,6 @@
 class RipplesController < ApplicationController
-  before_action :set_ripple, only: [:show, :edit, :update, :destroy]
+  before_action :set_ripple, only: [:show]
+  before_action :redirect_user, only: [:edit, :update, :destroy]
   before_action :set_page, only: [:index]
   before_action :get_total_pages
 
@@ -85,6 +86,10 @@ class RipplesController < ApplicationController
       params.require(:ripple).permit(:name, :url, :message)
     end
 
+    def redirect_user
+      redirect_to root_path, notice: "Once something is said, it cannot be unsaid."
+    end
+
     def set_page
       session[:page] ||= 1
     end
@@ -93,4 +98,3 @@ class RipplesController < ApplicationController
       session[:total_pages] = (Ripple.all.count / 10.0).ceil
     end
 end
-

@@ -32,11 +32,27 @@ class RipplesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'blockquote', minimum: 1
   end
 
+  test "can't get edit" do
+    get edit_ripple_url(@ripple)
+    assert_response :redirect
+  end
+
+  test "shouldn't update ripple" do
+    assert_raises(ActionController::RoutingError) do
+      patch ripple_url(@ripple), params: { ripple: { name: @ripple.name, message: "this won't work", url: @ripple.url } }
+    end
+  end
+
+  test "can't destroy ripple" do
+    assert_raises(ActionController::RoutingError) do
+      delete ripple_url(@ripple)
+    end
+  end
+
   # Starts on page 1, confirms redirect and 10 ripples, except page 11 which has 5
   test "should navigate to each page from page 1 up to 11" do
     get root_path
     assert_equal session[:total_pages], 11
-    assert_equal session[:page], 1
     1.upto(10) do |page|
       get ripples_page_path(page)
       assert_response :redirect
@@ -55,7 +71,6 @@ class RipplesControllerTest < ActionDispatch::IntegrationTest
   test "should navigate to each page from page 11 down to 1" do
     get root_path
     assert_equal session[:total_pages], 11
-    assert_equal session[:page], 1
     get ripples_page_path(11)
     assert_response :redirect
     assert_equal session[:page], 11
@@ -71,6 +86,7 @@ class RipplesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not navigate to pages beyond the total page range" do
+    get root_path
     get ripples_page_path(15)
     assert_response :redirect
     assert_equal session[:page], 11 #Max page
