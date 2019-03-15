@@ -32,12 +32,57 @@ class RipplesControllerTest < ActionDispatch::IntegrationTest
     assert_select 'blockquote', minimum: 1
   end
 
-  test "should get get next 10 ripples, then go back to newest" do
+  # Starts on page 1, confirms redirect and 10 ripples, except page 11 which has 5
+  test "should navigate to each page from page 1 up to 11" do
     get root_path
-    assert_response :success
-    assert_equal session[:page], 1
-    get ripples_page_path(7)
-    assert_equal session[:page], 7
     assert_equal session[:total_pages], 11
+    assert_equal session[:page], 1
+    1.upto(10) do |page|
+      get ripples_page_path(page)
+      assert_response :redirect
+      assert_equal session[:page], page
+      get root_path
+      assert_select 'table tbody tr', minimum: 10
+    end
+    get ripples_page_path(11)
+    assert_response :redirect
+    assert_equal session[:page], 11
+    get root_path
+    assert_select 'table tbody tr', minimum: 5
   end
+
+  # Starts on page 11, confirms redirect and 10 ripples, except page 11 which has 5
+  test "should navigate to each page from page 11 down to 1" do
+    get root_path
+    assert_equal session[:total_pages], 11
+    assert_equal session[:page], 1
+    get ripples_page_path(11)
+    assert_response :redirect
+    assert_equal session[:page], 11
+    get root_path
+    assert_select 'table tbody tr', minimum: 5
+    10.downto(1) do |page|
+      get ripples_page_path(page)
+      assert_response :redirect
+      assert_equal session[:page], page
+      get root_path
+      assert_select 'table tbody tr', minimum: 10
+    end
+  end
+
+  test "should not navigate to pages beyond the total page range" do
+    get ripples_page_path(15)
+    assert_response :redirect
+    assert_equal session[:page], 11 #Max page
+    get ripples_page_path(12)
+    assert_response :redirect
+    assert_equal session[:page], 11 #Max page
+    get ripples_page_path(0)
+    assert_response :redirect
+    assert_equal session[:page], 1  #Min page
+    get ripples_page_path(-3)
+    assert_response :redirect
+    assert_equal session[:page], 1  #Min page
+  end
+
 end
