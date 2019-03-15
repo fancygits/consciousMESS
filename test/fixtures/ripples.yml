@@ -23,3 +23,10 @@ bad_url:
 no_url:
   name: Mr. Absent Url
   message: I don't have a URL.
+
+<% 100.times do |i| %>
+fix_<%= i %>:
+  name: Mr. Fixture <%= i %>
+  url: http://www.dynamicfixtures.com
+  message: This is a dynamic fixture to fill out the pages. This is ripple <%= i %>.
+<% end %>
