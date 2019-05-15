@@ -1,24 +1,9 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+CONSCIOUS/mess is a website for posting messages in reverse chronological order.  Anyone can post a new mesasge (called a "ripple") -- there is no authentication, just a list of quotes, rants, notes-to-remember, etc. with the newest showing first.
 
-Things you may want to cover:
+The website is based on a single table, Ripples, with the following columns:
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+name: the name, pseudonym, alias, etc., of the person leaving the message.  It can be anything, but it can not be blank.
+url: any valid url the person wants to associate with the message.  This is optional.
+message: the message they're writing.  It can not be blank.
